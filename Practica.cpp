@@ -51,17 +51,16 @@ stack<int> compatible2(int i, const vector<Vuelo>& v)
 	s.push(i);
 	while (!s.empty())
 	{
-		int d = v[s.top()].d;
+		i = s.top();
+		s.pop();
 		for (int j = 0; j < v.size(); ++j)
 		{
-			if ((i != j) and (v[i].d == v[j].o) and (v[i].td <= v[j].to))
+			if ((i != j) and (v[i].d == v[j].o) and ((v[i].td + 15) <= v[j].to))
 			{
 				s.push(j);
-				if ((v[i].td + 15) <= v[j].to)
-					r.push(2*j);
+				r.push(2*j);
 			}
 		}
-		s.pop();
 	}
 	return r;
 }
@@ -95,7 +94,7 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 		for (int j = 0; j < n; ++j)
 		{
 			m[i][j] = mat[i][j].second - mat[i][j].first;
-			m[i][n + 1] = m[n][i] + mat[i][j].first;
+			m[i][n + 1] = m[i][n + 1] + mat[i][j].first;
 			m[n][j] = m[n][j] + mat[i][j].first;
 		}
 	}
