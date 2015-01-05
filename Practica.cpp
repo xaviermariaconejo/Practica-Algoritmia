@@ -104,7 +104,8 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
 
     while (not q.empty()) {
     	int u = q.front();
-    	for(int v : mat[u]) {
+    	for(int j = 0; j < mat[u].size(); ++j) {
+    		int v = mat[u][j];
     		if (mat[u][v] > 0 and p[v] == -1) {
     		//Capacitat-Fluxe es > 0 i no s'ha visitat encara.
     			p[v] = u;
@@ -123,9 +124,8 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     					res[v][u] -= f[t];
     					v = u;
     				}
-    				return //TODO: si ya hemos encontrado un camino que llega a t salimos de la funcion.
+    				return; //TODO: si ya hemos encontrado un camino que llega a t salimos de la funcion.
     			}
-
     		}
     	}
     }
@@ -144,9 +144,9 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
     
     //no existeix cap cami desde s fins a t, no es pot augmentar mes:
 	int suma = 0;
-	for (int flux : res[s]) //calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
+	for (int j = 0; j < res[s].size(); ++j) //calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
 	{
-		suma = suma + flux;
+		suma = suma + res[s][j];
 	}
 	return suma;
 	
@@ -160,13 +160,16 @@ int otroAlgoritmo(vector< vector<int> >& mat)
 vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
 {
 	bool b = false;
-	int k;
+	int k, s, t;
+	s = mat[mat.size() -2][0];
+	t = mat[mat.size() -1][0];
+
 	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
 		int cont;
 		mat[n][n - 1] = mat[n - 1][n + 1] = k;
 		vector< vector<int> > aux = mat;
-		if (x) cont = EdmonsKarp(aux);
+		if (x) cont = EdmonsKarp(aux,s,t);
 		else cont = otroAlgoritmo(aux);
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
