@@ -4,6 +4,7 @@
 #include <queue>
 #include <list>
 #include <limits>
+#include <stdio.h>
 using namespace std;
 
 struct Vuelo
@@ -187,15 +188,18 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 }
 
 void escriure(vector< list<int> > sol) {
-	cout << "Numero de pilotos: " << sol.size() << endl;
-	//esto es el numero de pilotos que seria la k que resuelve el problema.
-
-	for(int i = 0; i < sol.size(); ++i) {
-		for(list<int>::iterator j = sol[i].begin(); j != sol[i].end(); ++j) {
-			cout << *j << "";
-			//TODO: No se si funciona
+	FILE * pFile;
+	pFile = fopen ("output.txt","w");
+	if (pFile != NULL)
+	{
+		fputs (sol.size(),pFile);
+		for (int i = 0; i < sol.size(); ++i)
+		{
+			for (list<int>::iterator it = sol[i].begin(); it != sol[i].end(); ++it)
+				fputs(*it, pFile);
+			fputs("\n", pFile)
 		}
-		cout << endl;
+		fclose (pFile);
 	}
 }
 
