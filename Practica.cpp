@@ -39,7 +39,7 @@ stack<int> compatible1(int i, const vector<Vuelo>& v)
 	stack<int> s;
 	for (int j = 0; j < v.size(); ++j)
 	{
-		if ((i != j) and (v[i].d == v[j].o) and ((v[i].td + 15) >= v[j].to))
+		if ((i != j) and (v[i].d == v[j].o) and ((v[i].td + 15) <= v[j].to))
 			s.push(2*j);
 	}
 	return s;
@@ -54,10 +54,10 @@ stack<int> compatible2(int i, const vector<Vuelo>& v)
 		int d = v[s.top()].d;
 		for (int j = 0; j < v.size(); ++j)
 		{
-			if ((i != j) and (v[i].d == v[j].o) and (v[i].td >= v[j].to))
+			if ((i != j) and (v[i].d == v[j].o) and (v[i].td <= v[j].to))
 			{
 				s.push(j);
-				if ((v[i].td + 15) >= v[j].to)
+				if ((v[i].td + 15) <= v[j].to)
 					r.push(2*j);
 			}
 		}
