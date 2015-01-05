@@ -129,7 +129,6 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     		}
     	}
     }
-<<<<<<< HEAD
 }
 
 int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
@@ -141,18 +140,8 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
 	
     while (p[t] != -1) {
     	BFS(mat,s,t,p,res);
-=======
-    if(p[t] == -1) {
-    //no existeix cap cami desde s fins a t:
-    	int suma = 0;
-    	for (int flux : res[s])
-    	//calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
-    	{
-    		suma = suma + flux;
-    	}
-    	return suma;
->>>>>>> 095297f01c360fc542356390d94a141910fcc36a
     }
+    
     //no existeix cap cami desde s fins a t, no es pot augmentar mes:
 	int suma = 0;
 	for (int flux : res[s]) //calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
