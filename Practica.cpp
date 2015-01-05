@@ -181,13 +181,13 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
 	cout << "LA SOLUCIO ES: " << cont << endl;
-	vector< list<int> > v(k);
+	vector< list<int> > v(k-1);
 	//sacar la lista de viajes q hace cada piloto
 	return v;
 }
 
 void escriure(vector< list<int> > sol) {
-	/*cout << sol.size() << endl;
+	cout << "Numero de pilotos: " << sol.size() << endl;
 	//esto es el numero de pilotos que seria la k que resuelve el problema.
 
 	for(int i = 0; i < sol.size(); ++i) {
@@ -196,7 +196,7 @@ void escriure(vector< list<int> > sol) {
 			//TODO: No se si funciona
 		}
 		cout << endl;
-	}*/
+	}
 }
 
 int main()
