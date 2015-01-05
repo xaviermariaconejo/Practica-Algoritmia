@@ -168,8 +168,8 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 {
 	bool b = false;
 	int k, s, t;
-	s = mat[mat.size() -2][0];
-	t = mat[mat.size() -1][0];
+	s = mat.size() -2;
+	t = mat.size() -1;
 
 	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
@@ -179,6 +179,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 		else cont = otroAlgoritmo(mat);
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
+	cout << "LA SOLUCIO ES: " << cont;
 	vector< list<int> > v(k);
 	//sacar la lista de viajes q hace cada piloto
 	return v;
