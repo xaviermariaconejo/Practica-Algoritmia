@@ -124,7 +124,8 @@ int otroAlgoritmo(vector< vector<int> >& mat)
 vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
 {
 	bool b = false;
-	for (int k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
+	int k;
+	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
 		int cont;
 		mat[n][n - 1] = m[n - 1][n + 1] = k;
@@ -133,7 +134,7 @@ vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
 		else cont = otroAlgoritmo(aux);
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
-	vector< list<int> > v;
+	vector< list<int> > v(k);
 	//sacar la lista de viajes q hace cada piloto
 	return v;
 }
