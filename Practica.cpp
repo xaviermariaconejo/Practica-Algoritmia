@@ -167,7 +167,7 @@ vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
 	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
 		int cont;
-		mat[n][n - 1] = mat[n - 1][n + 1] = k;
+		mat[mat.size() - 2][mat.size() - 3] = mat[mat.size() - 3][mat.size() - 1] = k;
 		vector< vector<int> > aux = mat;
 		if (x) cont = EdmonsKarp(aux,s,t);
 		else cont = otroAlgoritmo(aux);
