@@ -40,7 +40,7 @@ stack<int> compatible2(int i, const vector<Vuelo>& v)
 	s.push(i);
 	while (!s.empty())
 	{
-		int d = s.top().d;
+		int d = v[s.top()].d;
 		for (int j = 0; j < v.size(); ++j)
 		{
 			if ((i != j) and (v[i].d == v[j].o) and (v[i].td >= v[j].to))
@@ -105,14 +105,19 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     while (not q.empty()) {
     	int u = q.front();
     	for(int v : mat[u]) {
-    		if (mat[u][v] > 0 and p[v] == -1) { //Capacitat-Fluxe es > 0 i no s'ha visitat encara.
+    		if (mat[u][v] > 0 and p[v] == -1) {
+    		//Capacitat-Fluxe es > 0 i no s'ha visitat encara.
     			p[v] = u;
     			if (f[u] <= mat[u][v]) f[v] = f[u];
-    			else f[v] = mat[u][v]; //agafem el minim.
+    			else f[v] = mat[u][v];
+    			//agafem el minim.
 
-    			if(v != t) q.push(v); //sino hem arribat al final seguim buscant el cami.
-    			else { //recorrem el cami al reves i anem calculant el nou graf residu:
-    				while(p[v] != v) { //l'unic que el seu pare es ell mateix es s.
+    			if(v != t) q.push(v);
+    			//sino hem arribat al final seguim buscant el cami.
+    			else {
+    			//recorrem el cami al reves i anem calculant el nou graf residu:
+    				while(p[v] != v) {
+    				//l'unic que el seu pare es ell mateix es s.
     					u = p[v];
     					res[u][v] += f[t];
     					res[v][u] -= f[t];
@@ -124,6 +129,7 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     		}
     	}
     }
+<<<<<<< HEAD
 }
 
 int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
@@ -135,6 +141,17 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
 	
     while (p[t] != -1) {
     	BFS(mat,s,t,p,res);
+=======
+    if(p[t] == -1) {
+    //no existeix cap cami desde s fins a t:
+    	int suma = 0;
+    	for (int flux : res[s])
+    	//calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
+    	{
+    		suma = suma + flux;
+    	}
+    	return suma;
+>>>>>>> 095297f01c360fc542356390d94a141910fcc36a
     }
     //no existeix cap cami desde s fins a t, no es pot augmentar mes:
 	int suma = 0;
@@ -170,11 +187,13 @@ vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
 }
 
 void escriure(vector< list<int> > sol) {
-	cout << sol.size() << endl; //esto es el numero de pilotos que seria la k que resuelve el problema.
+	cout << sol.size() << endl;
+	//esto es el numero de pilotos que seria la k que resuelve el problema.
 
 	for(int i = 0; i < sol.size(); ++i) {
 		for(list<int>::iterator j = sol[i].begin(); j != sol[i].end(); ++j) {
-			cout << *j << ""; //TODO: No se si funciona
+			cout << *j << "";
+			//TODO: No se si funciona
 		}
 		cout << endl;
 	}
