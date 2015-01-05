@@ -107,6 +107,7 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
 {
 	vector<int> f = vector<int>(mat.size()); //capacitat del cami. Necesaria per calcular el flux que queda en l'aresta i quant torna.
 
+    p = vector<int>(mat.size(), -1);
     p[s] = s; //indicamos que es el inicio.
     f[s] = numeric_limits<int>::max();
 
@@ -114,22 +115,22 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     q.push(s);
 
     while (not q.empty()) {
+        
     	int u = q.front();
-    	for(int j = 0; j < mat[u].size(); ++j) {
-    		int v = mat[u][j];
-    		if (mat[u][v] > 0 and p[v] == -1) {
-    		//Capacitat-Fluxe es > 0 i no s'ha visitat encara.
+        q.pop();
+
+    	for(int v = 0; v < mat[u].size(); ++v) {
+
+    		if (mat[u][v]-res[u][v] > 0 and p[v] == -1) { //Capacitat-Fluxe es > 0 i no s'ha visitat encara.
     			p[v] = u;
-    			if (f[u] <= mat[u][v]) f[v] = f[u];
-    			else f[v] = mat[u][v];
+    			if (f[u] <= mat[u][v]-res[u][v]) f[v] = f[u];
+    			else f[v] = mat[u][v]-res[u][v];
     			//agafem el minim.
 
-    			if(v != t) q.push(v);
-    			//sino hem arribat al final seguim buscant el cami.
-    			else {
-    			//recorrem el cami al reves i anem calculant el nou graf residu:
-    				while(p[v] != v) {
-    				//l'unic que el seu pare es ell mateix es s.
+    			if(v != t) q.push(v); //sino hem arribat al final seguim buscant el cami.
+
+    			else { //recorrem el cami al reves i anem calculant el nou graf residu:
+    				while(p[v] != v) { //l'unic que el seu pare es ell mateix es s.
     					u = p[v];
     					res[u][v] += f[t];
     					res[v][u] -= f[t];
@@ -144,14 +145,12 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
 
 int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
 {
-	vector< vector<int> > res = vector< vector<int> >(mat.size()); //graf residual
-	vector<int> p = vector<int>(mat.size(), -1); //taula dels "pares", contindra el cami.
+	vector< vector<int> > res (mat.size(),vector<int>(mat.size(),0)); //graf residual
+	vector<int> p; //taula dels "pares", contindra el cami.
 
-	BFS(mat,s,t,p,res);
-	
-    while (p[t] != -1) {
+    do {
     	BFS(mat,s,t,p,res);
-    }
+    } while (p[t] != -1);
     
     //no existeix cap cami desde s fins a t, no es pot augmentar mes:
 	int suma = 0;

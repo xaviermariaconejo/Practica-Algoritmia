@@ -5,16 +5,6 @@
 
 using namespace std;
 
-void escribir(const vector< vector<int> > v) {
-    for(int i = 0; i < v.size(); ++i) {
-        for (int j = 0; j < v[0].size(); ++j)
-        {
-            cout << v[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "Fin de escritura" << endl;
-}
 
 void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector< vector<int> >& res)
 {
@@ -28,37 +18,27 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     q.push(s);
 
     while (not q.empty()) {
-        cout << "hola4" << endl;
+        
     	int u = q.front();
-        cout << "hola5" << endl;
-    	for(int j = 0; j < mat[u].size(); ++j) {
-            cout << "hola6" << endl;
-    		int v = mat[u][j];
-            cout << "hola7" << endl;
-    		if (mat[u][v]-res[u][v] > 0 and p[v] == -1) {
-                cout << "hola3" << endl;
-    		//Capacitat-Fluxe es > 0 i no s'ha visitat encara.
+        q.pop();
+
+    	for(int v = 0; v < mat[u].size(); ++v) {
+
+    		if (mat[u][v]-res[u][v] > 0 and p[v] == -1) { //Capacitat-Fluxe es > 0 i no s'ha visitat encara.
     			p[v] = u;
     			if (f[u] <= mat[u][v]-res[u][v]) f[v] = f[u];
     			else f[v] = mat[u][v]-res[u][v];
     			//agafem el minim.
 
-    			if(v != t) {
-                    q.push(v);
-                    cout << "hola2" << endl;
-                }
-    			//sino hem arribat al final seguim buscant el cami.
-    			else {
-                    cout << "Em trobat un cami" << endl;
-    			//recorrem el cami al reves i anem calculant el nou graf residu:
-    				while(p[v] != v) {
-    				//l'unic que el seu pare es ell mateix es s.
+    			if(v != t) q.push(v); //sino hem arribat al final seguim buscant el cami.
+
+    			else { //recorrem el cami al reves i anem calculant el nou graf residu:
+    				while(p[v] != v) { //l'unic que el seu pare es ell mateix es s.
     					u = p[v];
     					res[u][v] += f[t];
     					res[v][u] -= f[t];
     					v = u;
     				}
-                    cout << "hola1" << endl;
     				return; //TODO: si ya hemos encontrado un camino que llega a t salimos de la funcion.
     			}
     		}
@@ -68,15 +48,12 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
 
 int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
 {
-	vector< vector<int> > res = vector< vector<int> >(mat.size(),vector<int>(mat.size())); //graf residual
+	vector< vector<int> > res (mat.size(),vector<int>(mat.size(),0)); //graf residual
 	vector<int> p; //taula dels "pares", contindra el cami.
 
-	BFS(mat,s,t,p,res);
-	
-    while (p[t] != -1) {
-        cout << "iteracio" << endl;
+    do {
     	BFS(mat,s,t,p,res);
-    }
+    } while (p[t] != -1);
     
     //no existeix cap cami desde s fins a t, no es pot augmentar mes:
 	int suma = 0;
@@ -97,7 +74,6 @@ int main() {
         graf[u][v] = c;
     }
 
-    escribir(graf);
 
-    cout << "Max Flow: " << EdmonsKarp(graf, 0, 5);
+    cout << "Max Flow: " << EdmonsKarp(graf, 0, 5) << endl;
 }
