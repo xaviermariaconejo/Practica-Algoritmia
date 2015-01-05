@@ -111,24 +111,37 @@ void BFS(const vector< vector<int> >& mat, int i)
 	}
 }
 
-void EdmonsKarp(vector< vector<int> >& mat)
+int EdmonsKarp(vector< vector<int> >& mat)
 {
 
 }
 
-vector< list<int> > resolver(const vector< vector<int> >& mat)
+int otroAlgoritmo(vector< vector<int> >& mat)
 {
-	for (int k = 1; k <= (mat.size() - 4)/2; ++k)
+
+}
+
+vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
+{
+	bool b = false;
+	for (int k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
+		int cont;
 		mat[n][n - 1] = m[n - 1][n + 1] = k;
-		EdmonsKarp(mat);		
+		vector< vector<int> > aux = mat;
+		if (x) cont = EdmonsKarp(aux);
+		else cont = otroAlgoritmo(aux);
+		b = ((mat.size() - 4)/2 + k) == cont;
 	}
+	vector< list<int> > v;
+	//sacar la lista de viajes q hace cada piloto
+	return v;
 }
 
 int main()
 {
 	vector<Vuelo> v = leer();
 	vector< vector<int> > mat = grafo(v, true);
-	vector< list<int> > sol = resolver(mat);
+	vector< list<int> > sol = resolver(mat, true);
 	escriure(sol);
 }
