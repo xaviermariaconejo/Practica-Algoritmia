@@ -40,7 +40,7 @@ stack<int> compatible2(int i, const vector<Vuelo>& v)
 	s.push(i);
 	while (!s.empty())
 	{
-		int d = s.top().d;
+		int d = v[s.top()].d;
 		for (int j = 0; j < v.size(); ++j)
 		{
 			if ((i != j) and (v[i].d == v[j].o) and (v[i].td >= v[j].to))
