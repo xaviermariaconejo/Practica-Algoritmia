@@ -14,6 +14,17 @@ struct Vuelo
 	int td;
 };
 
+void escribir(const vector< vector<int> > v) {
+	for(int i = 0; i < v.size(); ++i) {
+		for (int j = 0; j < v[0].size(); ++j)
+		{
+			cout << v[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << "Fin de escritura" << endl;
+}
+
 vector<Vuelo> leer()
 {
 	vector<Vuelo> vuelos;
@@ -89,6 +100,7 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 		}
 	}
 	m[n][n - 2] = m[n - 1][n + 1] = -1;
+	escribir(m);
 	return m;
 }
 
