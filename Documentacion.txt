@@ -1,1 +1,26 @@
-insertar aqui documentacion : D
+﻿Algoritmia:
+
+AirScheduling Problem:
+
+El problema a tractar en aquesta entrega es conegut com “AirScheduling” que consisteix en, dontat un conjunt de vols entre ciutats, assignar la minima quantitat de pilots que puguin realitzar tots els vols a les hores previstes.
+
+Per tal de resoldre aquest problema em modelat el problema com una xarxa de fluxe i hem calculat el mínim valor que satisfà el MaxFlow associat a la xarxa.
+
+Implementació:
+
+La implementació d'aquest projecte ha consistit en:
+
+1- Modelar els vols com una xarxa de fluxe, per fer-ho hem associat a cada ciutat un node i a cada vol entre ciutats una aresta.
+
+A més, hem afegit arestes entre ciutats que son destí d'un vol i origen d'un altre i el pilot que arriba com a destí té temps de pilotar el següent vol.
+
+2- Donat aquesta xarxa, l'hem considerat com una xarxa amb demandes ja que tots els vols s'han de realitzar.
+
+3- Després de la modelització anterior calculem el valor mínim que satisfà la demanda anterior.
+Per resoldre aquest punt hem resolt el max-flow associat a la xarxa amb l'algoritme «Edmonds-Karp».
+
+Cost:
+
+El cost temporal associat aquest problema es:
+
+
