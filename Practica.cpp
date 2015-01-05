@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 using namespace std;
 
 struct Vuelo
@@ -89,10 +90,45 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 	return m;
 }
 
+void BFS(const vector< vector<int> >& mat, int i)
+{
+	vector<bool> visitats(mat.size(), false);
+	queue<int> q;
+	q.push(i);
+	visitats[i] = true;
+	while (!q.empty())
+	{
+		int x = q.front();
+		for (int j = 0; j < mat.size(); ++j)
+		{
+			if (!visitats[j] and mat[i][j] > 0)
+			{
+				q.push(j);
+				visitats[j] = true;
+			}
+		}
+		q.pop();
+	}
+}
+
+void EdmonsKarp(vector< vector<int> >& mat)
+{
+
+}
+
+vector< list<int> > resolver(const vector< vector<int> >& mat)
+{
+	for (int k = 1; k <= (mat.size() - 4)/2; ++k)
+	{
+		mat[n][n - 1] = m[n - 1][n + 1] = k;
+		EdmonsKarp(mat);		
+	}
+}
+
 int main()
 {
 	vector<Vuelo> v = leer();
 	vector< vector<int> > mat = grafo(v, true);
-	vector< list<int> > sol = EdmonsKarp(mat);
+	vector< list<int> > sol = resolver(mat);
 	escriure(sol);
 }
