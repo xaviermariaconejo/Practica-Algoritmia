@@ -157,7 +157,7 @@ int otroAlgoritmo(vector< vector<int> >& mat)
 
 }
 
-vector< list<int> > resolver(const vector< vector<int> >& mat, bool x)
+vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 {
 	bool b = false;
 	int k, s, t;
