@@ -14,7 +14,7 @@ struct Vuelo
 	int td;
 };
 
-void escribir(const vector< vector<int> > v) {
+/*void escribir(const vector< vector<int> > v) {
 	for(int i = 0; i < v.size(); ++i) {
 		for (int j = 0; j < v[0].size(); ++j)
 		{
@@ -23,7 +23,7 @@ void escribir(const vector< vector<int> > v) {
 		cout << endl;
 	}
 	cout << "Fin de escritura" << endl;
-}
+}*/
 
 vector<Vuelo> leer()
 {
@@ -99,13 +99,12 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 		}
 	}
 	m[n][n - 2] = m[n - 1][n + 1] = -1;
-	escribir(m);
 	return m;
 }
 
 void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector< vector<int> >& res)
 {
-	vector<int> f = vector<int>(mat.size()); //capacitat del cami. Necesaria per calcular el flux que queda en l'aresta i quant torna.
+	vector<int> f(mat.size()); //capacitat del cami. Necesaria per calcular el flux que queda en l'aresta i quant torna.
 
     p = vector<int>(mat.size(), -1);
     p[s] = s; //indicamos que es el inicio.
@@ -155,16 +154,14 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
     //no existeix cap cami desde s fins a t, no es pot augmentar mes:
 	int suma = 0;
 	for (int j = 0; j < res[s].size(); ++j) //calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
-	{
 		suma = suma + res[s][j];
-	}
-	return suma;
-	
+
+	return suma;	
 }
 
 int otroAlgoritmo(vector< vector<int> >& mat)
 {
-
+	return 0;
 }
 
 vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
@@ -177,10 +174,9 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
 		int cont;
-		mat[mat.size() - 2][mat.size() - 3] = mat[mat.size() - 3][mat.size() - 1] = k;
-		vector< vector<int> > aux = mat;
-		if (x) cont = EdmonsKarp(aux,s,t);
-		else cont = otroAlgoritmo(aux);
+		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
+		if (x) cont = EdmonsKarp(mat,s,t);
+		else cont = otroAlgoritmo(mat);
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
 	vector< list<int> > v(k);
@@ -189,7 +185,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 }
 
 void escriure(vector< list<int> > sol) {
-	cout << sol.size() << endl;
+	/*cout << sol.size() << endl;
 	//esto es el numero de pilotos que seria la k que resuelve el problema.
 
 	for(int i = 0; i < sol.size(); ++i) {
@@ -198,7 +194,7 @@ void escriure(vector< list<int> > sol) {
 			//TODO: No se si funciona
 		}
 		cout << endl;
-	}
+	}*/
 }
 
 int main()
