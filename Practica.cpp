@@ -180,7 +180,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 		else cont = otroAlgoritmo(mat);
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
-	cout << "LA SOLUCIO ES: " << cont;
+	cout << "LA SOLUCIO ES: " << cont << endl;
 	vector< list<int> > v(k);
 	//sacar la lista de viajes q hace cada piloto
 	return v;
