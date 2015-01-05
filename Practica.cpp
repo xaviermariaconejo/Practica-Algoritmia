@@ -92,31 +92,8 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 	return m;
 }
 
-void BFS(const vector< vector<int> >& mat, int i)
+void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector< vector<int> >& res)
 {
-	vector<bool> visitats(mat.size(), false);
-	queue<int> q;
-	q.push(i);
-	visitats[i] = true;
-	while (!q.empty())
-	{
-		int x = q.front();
-		for (int j = 0; j < mat.size(); ++j)
-		{
-			if (!visitats[j] and mat[i][j] > 0)
-			{
-				q.push(j);
-				visitats[j] = true;
-			}
-		}
-		q.pop();
-	}
-}
-
-int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
-{
-	vector< vector<int> > res = vector< vector<int> >(mat.size()); //graf residual
-	vector<int> p = vector<int>(mat.size(), -1); //taula dels "pares", contindra el cami.
 	vector<int> f = vector<int>(mat.size()); //capacitat del cami. Necesaria per calcular el flux que queda en l'aresta i quant torna.
 
     p[s] = s; //indicamos que es el inicio.
@@ -141,19 +118,31 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
     					res[v][u] -= f[t];
     					v = u;
     				}
+    				return //TODO: si ya hemos encontrado un camino que llega a t salimos de la funcion.
     			}
 
     		}
     	}
     }
-    if(p[t] == -1) {//no existeix cap cami desde s fins a t:
-    	int suma = 0;
-    	for (int flux : res[s]) //calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
-    	{
-    		suma = suma + flux;
-    	}
-    	return suma;
+}
+
+int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
+{
+	vector< vector<int> > res = vector< vector<int> >(mat.size()); //graf residual
+	vector<int> p = vector<int>(mat.size(), -1); //taula dels "pares", contindra el cami.
+
+	BFS(mat,s,t,p,res);
+	
+    while (p[t] != -1) {
+    	BFS(mat,s,t,p,res);
     }
+    //no existeix cap cami desde s fins a t, no es pot augmentar mes:
+	int suma = 0;
+	for (int flux : res[s]) //calculem el fluxe que surt de s, que sera el que arribara a t, per tant el fluxe maxim.
+	{
+		suma = suma + flux;
+	}
+	return suma;
 	
 }
 
