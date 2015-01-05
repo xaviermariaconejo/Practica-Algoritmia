@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <stack>
 using namespace std;
 
 struct Vuelo
@@ -11,15 +11,6 @@ struct Vuelo
 	int td;
 };
 
-void concatena(queue<int>& a, queue<int>& b)
-{
-	while (!b.empty())
-	{
-		a.push(b.front());
-		b.pop();
-	}
-}
-
 vector<Vuelo> leer()
 {
 	vector<Vuelo> v;
@@ -29,22 +20,36 @@ vector<Vuelo> leer()
 	return v
 }
 
-queue<int> compatible1(int i, const vector<Vuelo>& v)
+stack<int> compatible1(int i, const vector<Vuelo>& v)
 {
-	queue<int> q;
+	stack<int> s;
 	for (int j = 0; j < v.size(); ++j)
 	{
 		if ((i != j) and (v[i].d == v[j].o) and ((v[i].td + 15) >= v[j].to))
 			q.push(2*j);
 	}
-	return q;
+	return s;
 }
 
 queue<int> compatible2(int i, const vector<Vuelo>& v)
 {
-	queue<int> q;
-	
-	return q;
+	stack<int> r, s;
+	s.push(i);
+	while (!s.empty())
+	{
+		int d = s.top().d;
+		for (int j = 0; j < v.size(); ++j)
+		{
+			if ((i != j) and (v[i].d == v[j].o) and (v[i].td >= v[j].to))
+			{
+				s.push(j);
+				if ((v[i].td + 15) >= v[j].to)
+					r.push(2*j);
+			}
+		}
+		s.pop();
+	}
+	return r;
 }
 
 vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
@@ -57,12 +62,13 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 		mat[2*i][2*i + 1] = pair<int, int>(1, 1);
 		mat[n][2*i] = pair<int, int>(0, 1);
 		mat[2*i + 1][n + 1] = pair<int, int>(0, 1);
-		queue<int> q = compatible1(i, v);
-		if (x) concatena(q, compatible2(i, v));
-		while (!q.empty())
+		stack<int> s;
+		if (x) s = compatible1(i, v);
+		else s = compatible2(i, v);
+		while (!s.empty())
 		{
-			mat[2*i + 1][q.front()] = pair<int, int>(0, 1);
-			q.pop();
+			mat[2*i + 1][s.top()] = pair<int, int>(0, 1);
+			s.pop();
 		}
 	}
 
@@ -86,7 +92,7 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 int main()
 {
 	vector<Vuelo> v = leer();
-	vector< vector<int> > mat = grafo(v, false);
+	vector< vector<int> > mat = grafo(v, true);
 	vector< list<int> > sol = EdmonsKarp(mat);
 	escriure(sol);
 }
