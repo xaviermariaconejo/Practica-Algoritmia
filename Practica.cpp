@@ -198,38 +198,48 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t, vector< vector<int> >& 
 
 vector< list<int> > resolver(vector< vector<int> >& mat)
 {
+	/*Cerca Dicotomica:*/
 	int s = mat.size() - 2;
 	int t = mat.size() - 1;
 	vector< vector<int> > res;
 
 	int e = 1;
 	int d = (mat.size() - 4)/2;
-	int k = 1;
+	int k = (mat.size() - 4)/2;
+
+	mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
+	int max = EdmonsKarp(mat,s,t,res);
+
 	while (e <= d)
 	{
 		k = (e + d)/2;
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
 		if (EdmonsKarp(mat,s,t,res) == ((mat.size() - 4)/2 + k))
-            d = --k;
+            d = k - 1;
         else
-        	e = ++k;
+        	e = k + 1;
 	}
-	/*bool b = false;
+	return calcularViajes(res, mat.size()-4, mat.size()-3, k);
+	
+
+	/*CERCA ITERATIVA:
+	
+	bool b = false;
 	int k, s, t;
 	s = mat.size() -2;
 	t = mat.size() -1;
-	vector< vector<int> > res;
-	//esto contendra el grafo residual para calcular que vuelo hace cada piloto una vez hallada la k optima.
+	vector< vector<int> > res; //esto contendra el grafo residual para calcular que vuelo hace cada piloto una vez hallada la k optima.
 
 	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
 		int cont;	
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
 		b = ((mat.size() - 4)/2 + k) == EdmonsKarp(mat,s,t,res);
+		cout << "K: " << k << endl;
+		cout << "Max Flow: " << EdmonsKarp(mat,s,t,res) << endl;
 	}
-	*/
-	return calcularViajes(res, mat.size()-4, mat.size()-3, k);
-	//sacar la lista de viajes q hace cada piloto
+	 
+	return calcularViajes(res, mat.size()-4, mat.size()-3, k-1);//sacar la lista de viajes q hace cada piloto*/
 }
 
 void escriure1(vector< list<int> > sol) {
