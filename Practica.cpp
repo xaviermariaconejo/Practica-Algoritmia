@@ -92,27 +92,30 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 	return m;
 }
 
-vector< list<int> > calculaViajes(const vector< vector<int> > &res, int a, int b, int k)
+vector< list<int> > calculaViajes(vector< vector<int> > &res, int a, int b, int k)
 {
 	vector< list<int> > vl(k);
-	stack<int> s;
-	s.push(a);
-	int aux = 0;
-	while (!s.empty())
+	for (int aux = 0; aux < k; ++aux)
 	{
-		a = s.top();
-		s.pop();
-		for (int i = 0; i < res[a].size(); ++i)
+		stack<int> s;
+		s.push(a);
+		bool c = false;
+		while (!c)
 		{
-			if (res[a][i] > 0)
+			a = s.top();
+			s.pop();
+			for (int i = 0; i < res[a].size(); ++i)
 			{
-				if (i != b)
+				if (res[a][i] > 0)
 				{
-					s.push(i + 1);
-					vl[aux].push_back(i/2);
+					res[a][i] = 0;
+					if (i != b)
+					{
+						s.push(i + 1);
+						vl[aux].push_back(i/2);
+					}
+					else c = true;
 				}
-				else
-					++aux;
 			}
 		}
 	}
