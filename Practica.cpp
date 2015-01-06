@@ -243,7 +243,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 }
 
 void escriure1(vector< list<int> > sol) {
-	ofstream fs("Resultado1.txt");
+	ofstream fs("salida1.txt");
 
 	fs << sol.size() << endl;
 	for (int i = 0; i < sol.size(); ++i)
@@ -256,7 +256,7 @@ void escriure1(vector< list<int> > sol) {
 }
 
 void escriure2(vector< list<int> > sol) {
-	ofstream fs("Resultado2.txt");
+	ofstream fs("salida2.txt");
 
 	fs << sol.size() << endl;
 	for (int i = 0; i < sol.size(); ++i)
