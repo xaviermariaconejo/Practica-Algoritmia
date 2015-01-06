@@ -204,18 +204,15 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 
 	int e = 1;
 	int d = (mat.size() - 4)/2;
-	int k = (mat.size() - 4)/2;
-	mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
-	int max = EdmonsKarp(mat,s,t,res);
+	int k = 1;
 	while (e <= d)
 	{
 		k = (e + d)/2;
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
-		int aux = EdmonsKarp(mat,s,t,res);
-		if (aux == max)
-            d = k - 1;
+		if (EdmonsKarp(mat,s,t,res) == (mat.size() - 4)/2 + k))
+            d = --k;
         else
-        	e = k + 1;
+        	e = ++k;
 	}
 	/*bool b = false;
 	int k, s, t;
@@ -231,7 +228,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 		b = ((mat.size() - 4)/2 + k) == EdmonsKarp(mat,s,t,res);
 	}
 	*/
-	return calcularViajes(res, mat.size()-4, mat.size()-3, e);
+	return calcularViajes(res, mat.size()-4, mat.size()-3, k);
 	//sacar la lista de viajes q hace cada piloto
 }
 
