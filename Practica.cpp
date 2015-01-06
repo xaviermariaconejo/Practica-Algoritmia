@@ -231,7 +231,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 		b = ((mat.size() - 4)/2 + k) == EdmonsKarp(mat,s,t,res);
 	}
 	*/
-	return calcularViajes(res, mat.size()-4, mat.size()-3, k);
+	return calcularViajes(res, mat.size()-4, mat.size()-3, e);
 	//sacar la lista de viajes q hace cada piloto
 }
 
