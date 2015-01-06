@@ -209,7 +209,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 	int max = EdmonsKarp(mat,s,t,res);
 	while (e <= d)
 	{
-		k = (i + d)/2;
+		k = (e + d)/2;
 		int aux = EdmonsKarp(mat,s,t,res);
 		if (aux == max)
             d = k - 1;
