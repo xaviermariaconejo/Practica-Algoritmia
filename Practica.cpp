@@ -4,7 +4,7 @@
 #include <queue>
 #include <list>
 #include <limits>
-#include <stdio.h>
+#include <fstream>
 using namespace std;
 
 struct Vuelo
@@ -196,19 +196,15 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 }
 
 void escriure(vector< list<int> > sol, string s) {
-	FILE * pFile;
-	pFile = fopen ("Resultado" + s + ".txt","w");
-	if (pFile != NULL)
+	ofstream fs("Resultado" + s + ".txt");
+	fs << sol.size() << endl;
+	for (int i = 0; i < sol.size(); ++i)
 	{
-		fputs (sol.size(),pFile);
-		for (int i = 0; i < sol.size(); ++i)
-		{
-			for (list<int>::iterator it = sol[i].begin(); it != sol[i].end(); ++it)
-				fputs(*it, pFile);
-			fputs("\n", pFile);
-		}
-		fclose (pFile);
+		for (list<int>::iterator it = sol[i].begin(); it != sol[i].end(); ++it)
+			fs << *it << " ";
+		fs << endl;
 	}
+	fs.close();
 }
 
 int main()
