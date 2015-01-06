@@ -14,17 +14,6 @@ struct Vuelo
 	int td;
 };
 
-/*void escribir(const vector< vector<int> > v) {
-	for(int i = 0; i < v.size(); ++i) {
-		for (int j = 0; j < v[0].size(); ++j)
-		{
-			cout << v[i][j] << " ";
-		}
-		cout << endl;
-	}
-	cout << "Fin de escritura" << endl;
-}*/
-
 vector<Vuelo> leer()
 {
 	vector<Vuelo> vuelos;
@@ -102,6 +91,11 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 	return m;
 }
 
+void calculaViajes(vector< list<int> > &v, int s, const vector< vector<int> > &res) {
+	vector<bool> visit(res.size(), false);
+	
+}
+
 void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector< vector<int> >& res)
 {
 	vector<int> f(mat.size()); //capacitat del cami. Necesaria per calcular el flux que queda en l'aresta i quant torna.
@@ -142,9 +136,9 @@ void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector<
     }
 }
 
-int EdmonsKarp(vector< vector<int> >& mat, int s, int t)
+int EdmonsKarp(vector< vector<int> >& mat, int s, int t, vector< vector<int> >& res)
 {
-	vector< vector<int> > res (mat.size(),vector<int>(mat.size(),0)); //graf residual
+	res = vector< vector<int> >(mat.size(),vector<int>(mat.size(),0)); //graf residual
 	vector<int> p; //taula dels "pares", contindra el cami.
 
     do {
@@ -170,18 +164,21 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 	int k, s, t;
 	s = mat.size() -2;
 	t = mat.size() -1;
+	vector< vector<int> > res; //esto contendra el grafo residual para calcular que vuelo hace cada piloto una vez hallada la k optima.
 
-	int cont;
 	for (k = 1; k <= (mat.size() - 4)/2 and !b; ++k)
 	{
-		
+		int cont;	
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
-		if (x) cont = EdmonsKarp(mat,s,t);
+		if (x) cont = EdmonsKarp(mat,s,t,res);
 		else cont = otroAlgoritmo(mat);
 		b = ((mat.size() - 4)/2 + k) == cont;
 	}
-	cout << "LA SOLUCIO ES: " << cont << endl;
+
 	vector< list<int> > v(k-1);
+	EdmonsKarp(mat,s,t,res);//recalculamos el optimo.
+
+	calculaViajes(v,mat.size()-4,res);
 	//sacar la lista de viajes q hace cada piloto
 	return v;
 }
