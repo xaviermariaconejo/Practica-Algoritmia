@@ -209,7 +209,7 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 	{
 		k = (e + d)/2;
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
-		if (EdmonsKarp(mat,s,t,res) == (mat.size() - 4)/2 + k))
+		if (EdmonsKarp(mat,s,t,res) == ((mat.size() - 4)/2 + k))
             d = --k;
         else
         	e = ++k;
