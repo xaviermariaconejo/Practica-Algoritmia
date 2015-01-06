@@ -175,6 +175,10 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t, vector< vector<int> >& 
 	return suma;	
 }
 
+/*int cercaDicotomica() {
+
+}*/
+
 vector< list<int> > resolver(vector< vector<int> >& mat)
 {
 	bool b = false;
