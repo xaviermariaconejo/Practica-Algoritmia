@@ -220,7 +220,7 @@ void escriure(vector< list<int> > sol, string s) {
 	for (int i = 0; i < sol.size(); ++i)
 	{
 		for (list<int>::iterator it = sol[i].begin(); it != sol[i].end(); ++it)
-			fs << *it << " ";
+			fs << *it + 1 << " ";
 		fs << endl;
 	}
 	fs.close();
