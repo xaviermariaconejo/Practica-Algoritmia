@@ -92,9 +92,32 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 	return m;
 }
 
-void calculaViajes(vector< list<int> > &v, int s, const vector< vector<int> > &res) {
-	vector<bool> visit(res.size(), false);
-	
+vector< list<int> > calculaViajes(const vector< vector<int> > &res, int a, int b, int k)
+{
+	vector< list<int> > vl(k);
+	stack<int> s;
+	s.push(a);
+	int aux = 0;
+	while (!s.empty())
+	{
+		a = s.top();
+		s.pop();
+		for (int i = 0; i < res[a].size(); ++i)
+		{
+			if (res[a][i] > 0)
+			{
+				if (i != b)
+				{
+					s.push(i + 1)
+					vl[aux].push_back(i/2);
+				}
+				else
+				{
+					++aux;
+				}
+			}
+		}
+	}
 }
 
 void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector< vector<int> >& res)
@@ -154,12 +177,7 @@ int EdmonsKarp(vector< vector<int> >& mat, int s, int t, vector< vector<int> >& 
 	return suma;	
 }
 
-int otroAlgoritmo(vector< vector<int> >& mat)
-{
-	return 0;
-}
-
-vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
+vector< list<int> > resolver(vector< vector<int> >& mat)
 {
 	bool b = false;
 	int k, s, t;
@@ -171,22 +189,17 @@ vector< list<int> > resolver(vector< vector<int> >& mat, bool x)
 	{
 		int cont;	
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
-		if (x) cont = EdmonsKarp(mat,s,t,res);
-		else cont = otroAlgoritmo(mat);
-		b = ((mat.size() - 4)/2 + k) == cont;
+		b = ((mat.size() - 4)/2 + k) == EdmonsKarp(mat,s,t,res);
 	}
+	//EdmonsKarp(mat,s,t,res);//recalculamos el optimo.
 
-	vector< list<int> > v(k-1);
-	EdmonsKarp(mat,s,t,res);//recalculamos el optimo.
-
-	calculaViajes(v,mat.size()-4,res);
+	return calculaViajes(res, mat.size()-4, mat.size()-3, k - 1);
 	//sacar la lista de viajes q hace cada piloto
-	return v;
 }
 
-void escriure(vector< list<int> > sol) {
+void escriure(vector< list<int> > sol, string s) {
 	FILE * pFile;
-	pFile = fopen ("output.txt","w");
+	pFile = fopen ("Resultado" + s + ".txt","w");
 	if (pFile != NULL)
 	{
 		fputs (sol.size(),pFile);
@@ -204,6 +217,9 @@ int main()
 {
 	vector<Vuelo> v = leer();
 	vector< vector<int> > mat = grafo(v, true);
-	vector< list<int> > sol = resolver(mat, true);
-	escriure(sol);
+	vector< list<int> > sol = resolver(mat);
+	escriure(sol, "1");
+	vector< vector<int> > mat = grafo(v, false);
+	vector< list<int> > sol = resolver(mat);
+	escriure(sol, "2");
 }
