@@ -205,7 +205,7 @@ void escriure(vector< list<int> > sol, string s) {
 		{
 			for (list<int>::iterator it = sol[i].begin(); it != sol[i].end(); ++it)
 				fputs(*it, pFile);
-			fputs("\n", pFile)
+			fputs("\n", pFile);
 		}
 		fclose (pFile);
 	}
