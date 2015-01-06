@@ -189,14 +189,17 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 		mat[mat.size() - 2][mat.size() - 4] = mat[mat.size() - 3][mat.size() - 1] = k;
 		b = ((mat.size() - 4)/2 + k) == EdmonsKarp(mat,s,t,res);
 	}
-	//EdmonsKarp(mat,s,t,res);//recalculamos el optimo.
 
 	return calculaViajes(res, mat.size()-4, mat.size()-3, k - 1);
 	//sacar la lista de viajes q hace cada piloto
 }
 
 void escriure(vector< list<int> > sol, string s) {
-	ofstream fs("Resultado" + s + ".txt");
+
+	//if (s == "1") 
+	ofstream fs("Resultado1.txt");
+	//else ofstream fs("Resultado2.txt");
+
 	fs << sol.size() << endl;
 	for (int i = 0; i < sol.size(); ++i)
 	{
