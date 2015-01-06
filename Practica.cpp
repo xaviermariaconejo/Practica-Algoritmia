@@ -108,13 +108,11 @@ vector< list<int> > calculaViajes(const vector< vector<int> > &res, int a, int b
 			{
 				if (i != b)
 				{
-					s.push(i + 1)
+					s.push(i + 1);
 					vl[aux].push_back(i/2);
 				}
 				else
-				{
 					++aux;
-				}
 			}
 		}
 	}
@@ -219,7 +217,7 @@ int main()
 	vector< vector<int> > mat = grafo(v, true);
 	vector< list<int> > sol = resolver(mat);
 	escriure(sol, "1");
-	vector< vector<int> > mat = grafo(v, false);
-	vector< list<int> > sol = resolver(mat);
+	mat = grafo(v, false);
+	sol = resolver(mat);
 	escriure(sol, "2");
 }
