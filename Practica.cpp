@@ -214,11 +214,21 @@ vector< list<int> > resolver(vector< vector<int> >& mat)
 	//sacar la lista de viajes q hace cada piloto
 }
 
-void escriure(vector< list<int> > sol, string s) {
-
-	//if (s == "1") 
+void escriure1(vector< list<int> > sol) {
 	ofstream fs("Resultado1.txt");
-	//else ofstream fs("Resultado2.txt");
+
+	fs << sol.size() << endl;
+	for (int i = 0; i < sol.size(); ++i)
+	{
+		for (list<int>::iterator it = sol[i].begin(); it != sol[i].end(); ++it)
+			fs << *it + 1 << " ";
+		fs << endl;
+	}
+	fs.close();
+}
+
+void escriure2(vector< list<int> > sol) {
+	ofstream fs("Resultado2.txt");
 
 	fs << sol.size() << endl;
 	for (int i = 0; i < sol.size(); ++i)
@@ -235,8 +245,8 @@ int main()
 	vector<Vuelo> v = leer();
 	vector< vector<int> > mat = grafo(v, true);
 	vector< list<int> > sol = resolver(mat);
-	escriure(sol, "1");
+	escriure1(sol);
 	mat = grafo(v, false);
 	sol = resolver(mat);
-	escriure(sol, "2");
+	escriure2(sol);
 }
