@@ -95,30 +95,43 @@ vector< vector<int> > grafo(const vector<Vuelo>& v, bool x)
 vector< list<int> > calculaViajes(vector< vector<int> > &res, int a, int b, int k)
 {
 	vector< list<int> > vl(k);
-	for (int aux = 0; aux < k; ++aux)
+	int j = 0;
+	for (int i = 0; i < k; ++i)
 	{
-		stack<int> s;
-		s.push(a);
+		list<int> l;
 		bool c = false;
-		while (!c)
+		while (j < res[a].size() and !c)
 		{
-			a = s.top();
+			if (res[a][j] > 0) c = true;
+			++j;
+		}
+		stack<int> s;
+		s.push(j - 1);
+		bool bc = false;
+		while (!s.empty() and !bc)
+		{
+			int x = s.top();
 			s.pop();
-			for (int i = 0; i < res[a].size(); ++i)
+			if (x != b)
 			{
-				if (res[a][i] > 0)
+				l.push_back(x/2);
+				bool aux = false;
+				int t = 0;
+				while (!aux and t < res[x + 1].size())
 				{
-					res[a][i] = 0;
-					if (i != b)
+					if (res[x + 1][t] > 0)
 					{
-						s.push(i + 1);
-						vl[aux].push_back(i/2);
+						s.push(t);
+						aux = true;
 					}
-					else c = true;
+					++t;
 				}
 			}
+			else bc = true;
 		}
+		vl[i] = l;
 	}
+	return vl;
 }
 
 void BFS(const vector< vector<int> >& mat, int s, int t, vector<int>& p, vector< vector<int> >& res)
